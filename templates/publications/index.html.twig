@@ -1,49 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Publications index{% endblock %}
+{% block title %}Publications index
+{% endblock %}
 
 {% block body %}
-    <h1>Publications index</h1>
+	<div class="row mt-3">
+		<div class="col">
+			<h1>Nos Publications :
+			</h1>
+		</div>
+		<div class="col">
+			<p data-aos="fade-up">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Slug</th>
-                <th>Contenu</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>FeaturedImage</th>
-                <th>IsActif</th>
-                <th>IsAfficher</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for publication in publications %}
-            <tr>
-                <td>{{ publication.id }}</td>
-                <td>{{ publication.titre }}</td>
-                <td>{{ publication.slug }}</td>
-                <td>{{ publication.contenu }}</td>
-                <td>{{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ publication.updatedAt ? publication.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ publication.featuredImage }}</td>
-                <td>{{ publication.isActif ? 'Yes' : 'No' }}</td>
-                <td>{{ publication.isAfficher ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_publications_show', {'id': publication.id}) }}">show</a>
-                    <a href="{{ path('app_publications_edit', {'id': publication.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+				<h3 class="lead mb-0 fst-italic text-danger mt-3">
+					<strong class="mx-3 fw-bold">Nous avons
+						{{ publications.getTotalItemCount }}
+						publications(s) active(s)</strong>
+				</h3>
+			</p>
+		</div>
+		<div class="col">
+			<a class="btn btn-primary btn-sm mt-3 mx-5" href="{{ path('publications_app_new') }}">Créer une Nouvelle Publication</a>
+		</div>
+	</div>
 
-    <a href="{{ path('app_publications_new') }}">Create new</a>
+	<table class="table mt-5">
+		<thead>
+			<tr>
+				{#<th>Id</th>#}
+				<th>FeaturedImage</th>
+				<th>Titre</th>
+				<th>Contenu</th>
+				<th>CreatedAt</th>
+				{#<th>UpdatedAt</th>#}
+				{#<th>IsActif</th>#}
+				<th>IsAfficher</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for publication in publications %}
+				<tr>
+					{#<td>{{ publication.id }}</td>#}
+					<td>{{ publication.featuredImage }}</td>
+					<td>{{ publication.titre }}</td>
+					<td class="w-50">{{ publication.contenu|striptags|u.truncate(250,'...',false) }}</td>
+					<td>{{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					{#<td>{{ publication.updatedAt ? publication.updatedAt|date('Y-m-d H:i:s') : '' }}</td>#}
+					{#<td>{{ publication.isActif ? 'Yes' : 'No' }}</td>#}
+					<td>{{ publication.isAfficher ? 'Yes' : 'No' }}</td>
+					<td>
+						<a class="btn btn-primary btn-sm" href="{{ path('publications_app_show', {'slug': publication.slug}) }}">show</a>
+						<a class="btn btn-primary btn-sm" href="{{ path('publications_app_edit', {'slug': publication.slug}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="10">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="navigation d-flex justify-content-center mt-4 ">
+		{{ knp_pagination_render(publications) }}
+	</div>
+
 {% endblock %}

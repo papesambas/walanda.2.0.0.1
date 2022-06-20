@@ -75,4 +75,24 @@ class PublicationsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function lastsix()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->where('p.isActif = TRUE')
+            ->andWhere('p.isAfficher = TRUE')
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function listPublication()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->where('p.isActif = TRUE')
+            ->getQuery()
+            ->getResult();
+    }
 }

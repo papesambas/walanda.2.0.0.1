@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Publications{% endblock %}
+{% block title %}Edit Publications
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Publications</h1>
+	<h1>Edit Publications</h1>
 
-    {{ include('publications/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('publications/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_publications_index') }}">back to list</a>
+	<a href="{{ path('publications_app_index') }}">back to list</a>
 
-    {{ include('publications/_delete_form.html.twig') }}
+	{{ include('publications/_delete_form.html.twig') }}
 {% endblock %}

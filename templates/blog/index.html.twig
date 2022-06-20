@@ -1,20 +1,71 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog/base.html.twig' %}
 
-{% block title %}Hello BlogController!{% endblock %}
+{% block title %}Hello BlogController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div class="container-fluid text-center my-3 bg-light">
+		<h1 data-aos="fade-up" class="fw-bolder fst-italic">Bienvenue sur le Blog de l'école privée Mamadou TRAORE</h1>
+		<h2>
+			<p data-aos="fade-up" class="lead mb-0 fst-italic text-danger mt-3">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+				<strong class="mx-5">Nos
+					{#{{ publications.getTotalItemCount }}#}
+					dernières publications(s)</strong>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<a class="ms-5 btn btn-primary btn-sm" href="{{ path('publications_app_index') }}">Liste des toutes les publications</a>
+				{% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'F:/Projet Walanda/walanda 1.1.2/src/Controller/BlogController.php'|file_link(0) }}">src/Controller/BlogController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'F:/Projet Walanda/walanda 1.1.2/templates/blog/index.html.twig'|file_link(0) }}">templates/blog/index.html.twig</a></code></li>
-    </ul>
-</div>
+			</p>
+
+		</h2>
+	</div>
+	<div class="container-fluid mt-5">
+		<div class="row g-5">
+			<div class="col-md-2 d-flex mt-2">
+				<div class="position-sticky  mt-3" style="width: 22rem;">
+					<div class="text-white p-4 mb-3 bg-secondary rounded  w-100 h-100 opacity-75">
+						<h4 class=" fw-bolder fst-italic">Catégories</h4>
+						<ul>
+							<li>Français</li>
+							<li>Anglais</li>
+							<li>Biologie</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div data-aos="fade-up" class="col-md-10 d-flex flex-wrap  mt-2">
+				{% for publication in publications %}
+					<div class="card mt-2">
+						<div class="card mx-2" style="width: 20rem;">
+							<div class="col-auto">
+								<img src="{{publication.featuredImage ? publication.featuredImage:''}}" class="img-fluid rounded" alt="">
+							</div>
+							<div class="col">
+								<div class="card-block px-2">
+									<h4 class="card-title">{{ publication.titre }}</h4>
+									<p class="card-text">{{ publication.contenu|striptags|u.truncate(150,'...',false)}}</p>
+									{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+										<a href="{{ path('publications_app_show', {'slug': publication.slug}) }}" class="btn btn-primary btn-sm">BUTTON</a>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+						<div class="card-footer w-100 text-muted">
+							<p class="h6 fs-6 fw-lighter fst-italic text-capitalize text-muted mb-0 ms-auto">
+								<small>
+									<time datetime="2022-06-02">Ajoutée le :
+										{{ publication.createdAt ? publication.createdAt|date('d-m-Y h\\h i\\mn s') : '' }}</time>
+								</small>
+							</p>
+						</div>
+					</div>
+
+				{% endfor %}
+			</div>
+
+
+		</div>
+	</div>
+
 {% endblock %}

@@ -135,6 +135,12 @@
     "jms/metadata": {
         "version": "2.6.1"
     },
+    "knplabs/knp-components": {
+        "version": "v3.5.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.8.0"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -679,6 +685,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.3.8"
+    },
+    "twig/string-extra": {
+        "version": "v3.4.0"
     },
     "twig/twig": {
         "version": "v3.3.10"

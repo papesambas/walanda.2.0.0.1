@@ -13,17 +13,13 @@ class PublicationsType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('slug')
             ->add('contenu')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('featuredImage')
             ->add('isActif')
             ->add('isAfficher')
             ->add('user')
             ->add('favoris')
-            ->add('categorie')
-        ;
+            ->add('categorie');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
