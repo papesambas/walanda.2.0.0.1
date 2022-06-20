@@ -1,0 +1,57 @@
+{% extends 'users/users.html.twig' %}
+
+{% block title %}Profil de
+	{{app.user.prenom}}
+	{{app.user.nom}}
+{% endblock %}
+
+{% block body %}
+
+	<div class="card rounded-5" style="width: 20rem;">
+		<img src="..." class="card-img-top" alt="...">
+		<div class="card-body">
+			<h5 class="card-title">{{app.user.prenom}}
+				{{app.user.nom}}</h5>
+			<p class="card-text">Télephone :
+				{{app.user.telephone}}</p>
+			<p class="card-text">Email :
+				{{app.user.email}}</p>
+			<p class="card-text">Etablissement :
+				{{app.user.etablissement}}</p>
+			<div class="d-flex justify-content">
+				<a href="{{path('users_app_profile_edit')}}" class="btn btn-primary btn-sm m-1">Modifier le Profil</a>
+				<a href="{{path('users_app_pass_edit')}}" class="btn btn-warning btn-sm m-1">Modifier le mot de passe</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		{% for message in app.flashes('message') %}
+			<div class="alert alert-success" role="alert">{{ message }}</div>
+		{% endfor %}
+		<div class="col-6 m-3">
+			<h3>Publication de :
+				{{app.user.prenom}}
+				{{app.user.nom}}
+				({{app.user.publications|length}})</h3>
+		</div>
+		<hr>
+
+		{% for publication in app.user.publications %}
+
+			<div class="row">
+				<div class="col">
+					Titre
+				</div>
+				<div class="col-6">
+					{{publication.titre}}
+				</div>
+				<div class="col">
+					{{ publication.createdAt ? publication.createdAt|date('d-m-Y H:i:s') : '' }}
+				</div>
+			</div>
+
+		{% endfor %}
+
+
+	{% endblock %}

@@ -92,4 +92,13 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         ;
     }
     */
+
+    public function findbyId()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'DESC')
+            ->where('u.isVerified = TRUE')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'users/users.html.twig' %}
 
 {% block title %}Users index
 {% endblock %}
@@ -10,13 +10,10 @@
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Nom</th>
-				<th>Prenom</th>
+				<th>Nom et Prénom</th>
 				<th>Username</th>
-				<th>Telephone</th>
 				<th>Email</th>
 				<th>IsVerified</th>
-				<th>IsActif</th>
 				<th>CreatedAt</th>
 				<th>actions</th>
 			</tr>
@@ -25,17 +22,15 @@
 			{% for user in users %}
 				<tr>
 					<td>{{ user.id }}</td>
-					<td>{{ user.nom }}</td>
-					<td>{{ user.prenom }}</td>
+					<td>{{ user.nom|upper }}
+						{{ user.prenom|capitalize }}</td>
 					<td>{{ user.username }}</td>
-					<td>{{ user.telephone }}</td>
 					<td>{{ user.email }}</td>
 					<td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-					<td>{{ user.isActif ? 'Yes' : 'No' }}</td>
 					<td>{{ user.createdAt ? user.createdAt|date('Y-m-d') : '' }}</td>
 					<td>
-						<a href="{{ path('app_users_show', {'id': user.id}) }}">show</a>
-						<a href="{{ path('app_users_edit', {'id': user.id}) }}">edit</a>
+						<a class="btn btn-primary btn-sm" href="{{ path('users_app_show', {'id': user.id}) }}">show</a>
+						<a class="btn btn-primary btn-sm" href="{{ path('users_app_edit', {'id': user.id}) }}">edit</a>
 					</td>
 				</tr>
 			{% else %}
@@ -46,5 +41,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_users_new') }}">Create new</a>
+	<a href="{{ path('users_app_new') }}">Create new</a>
 {% endblock %}
