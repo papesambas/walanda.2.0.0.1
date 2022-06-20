@@ -1,7 +1,14 @@
 vich_uploader:
     db_driver: orm
 
-    #mappings:
-    #    products:
-    #        uri_prefix: /images/products
-    #        upload_destination: '%kernel.project_dir%/public/images/products'
+    mappings:
+        featured_images:
+            uri_prefix: "%app.path.featured_images%"
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            upload_destination: "%kernel.project_dir%/public%app.path.featured_images%"
+        photo:
+            uri_prefix: "%app.path.photo%"
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            upload_destination: "%kernel.project_dir%/public%app.path.photo%"
+    metadata:
+        type: attribute
