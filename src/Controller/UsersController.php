@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Form\UsersType;
+use App\Form\EditProfileType;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,17 +85,13 @@ class UsersController extends AbstractController
     }
 
     #[Route('/profile/edit', name: 'app_profile_edit', methods: ['GET', 'POST'])]
-    public function editprofile(Request $request, UsersRepository $usersRepos): Response
+    public function editprofile(Request $request): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(EditProfileType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $usersRepos->add($user);
-            $this->addFlash('message', 'Profil mis à jour');
-            return $this->redirectToRoute('users_app_profile', [], Response::HTTP_SEE_OTHER);
-        }
+
 
         return $this->renderForm('users/editProfile.html.twig', [
             'form' => $form,
@@ -108,7 +105,7 @@ class UsersController extends AbstractController
             $user = $this->getUser();
             // ovérifie si les 2 mots de passe sont identiques
             if ($request->get('pass') == $request->get('pass2')) {
-                $user->setPassword($passwordEncoder->hashPassword($user, $request->get('pass')));
+                /*$user->setPassword($passwordEncoder->hashPassword($user, $request->get('pass')));*/
                 $usersRepos->add($user);
                 $this->addFlash('message', 'Mot de pas a étémis à jour');
                 return $this->redirectToRoute('users_app_profile', [], Response::HTTP_SEE_OTHER);
